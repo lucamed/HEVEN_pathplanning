@@ -1,0 +1,10 @@
+1. Crop the road sign picture. (Any sign you want)
+
+2. Paste the road sign picture on the random position of the road picture.
+ 
+	* The road sign should not be cut off
+
+3. Create 100 pictures and save the file as 'road_001.jpg', 'road_002.jpg', ..., 'road_100.jpg' in data directory.
+
+
+Samples are attached in this file.

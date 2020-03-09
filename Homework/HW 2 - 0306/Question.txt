@@ -1,0 +1,5 @@
+1. Crop the center 500x500 size image using Pillow or OpenCV library in python.
+
+2. Save the cropped image.
+
+You can use any image that you want, but I attached some sample images as example.
