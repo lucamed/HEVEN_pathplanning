@@ -1,2 +1,3 @@
-# hevenpathplanning
-HEVEN path planning repository
+# Intro
+HEVEN path planning repository.
+
