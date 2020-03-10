@@ -3,7 +3,7 @@
 import cv2
  
 # Read image
-img = cv2.imread('cat.jpg')
+img = cv2.imread('../cat.jpg')
  
 # Get dimensions of image
 dimensions = img.shape
