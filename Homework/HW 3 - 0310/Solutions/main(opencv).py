@@ -22,6 +22,7 @@ bg_W = bg_img.shape[1]
 
 # Loop sample times
 for i in range(samples):
+    i+=1                                # Match naming 1~100
     result = bg_img.copy()              # Create a copy of the background img
 
     t_H = target.shape[0]               # Height and width of target sign
@@ -30,5 +31,5 @@ for i in range(samples):
     x = random.randrange(0, bg_W-t_W)
     y = random.randrange(0, bg_H-t_H)
 
-    result[y:t_H+y, x:t_W+x] = target
+    result[y:t_H+y, x:t_W+x] = target   # Paste target into bg
     cv2.imwrite(os.path.join(path ,'road_0'+str(i)+'.jpg'), result)
