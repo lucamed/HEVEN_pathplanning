@@ -1,11 +1,11 @@
 '''
-This program uses the base of HSV to detect yellow and white lane lines. There are many other solutions to this.
+This program uses the base of CannyEdge to detect yellow and white lane lines. There are many other solutions to this.
 It also separates between left and right ROI giving the following color relationship: 
     Left-Red Middle-Green Right-Blue 
 
-1. Opens the image.
-2. Extracts by HSV the yellow and white channels.
-3. Sums both HSV detection masks and split into Right and Left masks.
+1. Opens the image. Transform into gray.
+2. Extracts edges by CannyEdge.
+3. Sums both detection masks and split into Right and Left masks.
 4. In the function drawLines, HoughLinesP is used to find lines in both masks and draw the respective color .
     It also finds in function pointC an extention of the line, in order to give a better visualization of the drawn lines.
     Given 2 points by HoughLinesP, its calculated a 3 point with a given length.
@@ -56,12 +56,14 @@ def seg_intersect(a1, a2, b1, b2) :
 # Given 2 points, find a 3rd at certain distance
 def pointC(p1, p2):
     lenAB = np.sqrt(np.power(p1[0] - p2[0], 2)+np.power(p1[1] - p2[1], 2))
-    length = 370 - lenAB
+    length = 220 - lenAB
+    
     
     cx = p2[0] + (p2[0] - p1[0]) / lenAB * length
     cy = p2[1] + (p2[1] - p1[1]) / lenAB * length
 
     p1, p2 = p2, p1
+    length = 220 
     cx2 = p2[0] + (p2[0] - p1[0]) / lenAB * length
     cy2 = p2[1] + (p2[1] - p1[1]) / lenAB * length
 
@@ -69,17 +71,16 @@ def pointC(p1, p2):
 
 def drawLines(line_image, mask, side):
 
-    rho = 1 # distance resolution in pixels of the Hough grid
+    rho = 3 # distance resolution in pixels of the Hough grid
     theta = np.pi/180 # angular resolution in radians of the Hough grid
-    threshold = 40     # minimum number of votes (intersections in Hough grid cell)
-    min_line_length = 30  #minimum number of pixels making up a line
-    max_line_gap = 15    # maximum gap in pixels between connectable line segments
+    threshold = 160     # minimum number of votes (intersections in Hough grid cell)
+    min_line_length = 40  #minimum number of pixels making up a line
+    max_line_gap = 150    # maximum gap in pixels between connectable line segments
 
     lines_ = cv2.HoughLinesP(mask, rho, theta, threshold, np.array([]), min_line_length, max_line_gap)
-
     dot1 = np.array([lines_[:][:][0][0][2], lines_[:][:][0][0][3]])
     dot2 = np.array([lines_[:][:][0][0][0], lines_[:][:][0][0][1]])
-
+    
     if side == 'left':
         color = (0, 0, 255)
         # Swaps points in order to maintain format: dot1 being on the bottom and dot2 end of line
@@ -106,8 +107,8 @@ def ROI(frame):
 
     imshape = frame.shape
     
-    verticesL = np.array([[(0, 0),(0, imshape[0]), (int(imshape[1]/2), imshape[0]), (int(imshape[1]/2), 0)]], dtype=np.int32)
-    verticesR = np.array([[(int(imshape[1]/2), 0),(int(imshape[1]/2), imshape[0]), (imshape[1], imshape[0]), (imshape[1], 0)]], dtype=np.int32)
+    verticesL = np.array([[(0, imshape[0]),(int(imshape[1]/2), int(40+imshape[0]/2)), (int(imshape[0]/2), imshape[1]), (0, imshape[1])]], dtype=np.int32)
+    verticesR = np.array([[(imshape[1], imshape[0]),(int(imshape[1]/2), int(40+imshape[0]/2)), (int(imshape[0]/2), imshape[1]), (imshape[1], imshape[1])]], dtype=np.int32)
 
     cv2.fillPoly(maskR_, verticesR, ignore_mask_color)
     cv2.fillPoly(maskL_, verticesL, ignore_mask_color)
@@ -121,16 +122,14 @@ def ROI(frame):
 frame = cv2.imread('data/WW1.jpg')
 line_image = np.copy(frame)*0 # creating a blank to draw lines on
 frame = cv2.GaussianBlur(frame, (5, 5), 0)
-hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
+gray_image = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+canny_image = cv2.Canny(gray_image, 100, 200)
 
-mask_yellow = cv2.inRange(hsv, low_yellow, up_yellow)
-mask_white = cv2.inRange(hsv, low_white, up_white)
+mask_left, mask_right = ROI(canny_image)
 
-
-mask = cv2.bitwise_or(mask_yellow, mask_white) 
-mask_left, mask_right = ROI(mask)
-
+cv2.imshow('finalL', mask_left)
+cv2.imshow('fin3al', mask_right)
 
 line_image, dotL1, dotL2 = drawLines(line_image, mask_left, 'left')
 line_image, dotR1, dotR2 = drawLines(line_image, mask_right, 'right')
