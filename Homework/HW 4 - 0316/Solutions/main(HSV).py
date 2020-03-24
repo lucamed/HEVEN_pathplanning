@@ -118,7 +118,7 @@ def ROI(frame):
     return maskL, maskR
 
 
-frame = cv2.imread('data/WW1.jpg')
+frame = cv2.imread('data/YW1.jpg')
 line_image = np.copy(frame)*0 # creating a blank to draw lines on
 frame = cv2.GaussianBlur(frame, (5, 5), 0)
 hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
