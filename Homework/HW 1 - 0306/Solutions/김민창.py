@@ -16,4 +16,5 @@ for i in range(0,100):
     number = str(i)
     f.write("data" + "00" + number + ".txt\n")
 
-f.close()
+
+    f.close()
