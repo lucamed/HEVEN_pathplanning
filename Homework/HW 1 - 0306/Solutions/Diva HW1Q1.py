@@ -1,12 +1,13 @@
-#Q2
-import cv2
-img = cv2.imread("cat.jpg")
-cv2.imshow('first',img)
-cv2.waitKey(1000)
-w, h,chan = img.shape
-print(img.shape)
-crop_img = img[int((w/2))-250:int((w/2))+250,int((h/2))-250:int((h/2))+250 ]
-print(int((w/2)),int((w/2)),int((h/2)),int((h/2)))
-cv2.imshow("cropped", crop_img)
-print(crop_img.shape)
-cv2.waitKey(1000)
+#Q1
+import os
+data=os.getcwd() + "\Data"
+try:
+    # Create target Directory
+    os.mkdir(data)
+    print("Directory " ,data,  " Created ")
+except FileExistsError:
+    print("Directory " ,data,  " already exists")
+
+    for i in range (0,100):
+        f = open(os.path.expanduser(os.path.join(data, "00"+str(i) + ".txt")), "w")
+        f.write(str(i))
