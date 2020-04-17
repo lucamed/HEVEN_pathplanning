@@ -12,5 +12,6 @@ crop = photo[i-250:i+250 , i-250:i+250]
 cv2.imshow("photo",photo)
 cv2.imshow("crop", crop)
 
+
 cv2.waitKey(0)
 cv2.destroyAllWindows()
