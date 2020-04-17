@@ -12,7 +12,3 @@ for j in range(1,100) :
     g.write("data/00" + b + ".txt\n")
 
 g.close()
-
-
-
-
