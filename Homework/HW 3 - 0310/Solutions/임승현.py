@@ -6,37 +6,37 @@
 3. Create 100 pictures and save the file as 'road_001.jpg', 'road_002.jpg', ..., 'road_100.jpg' in data directory.
 
 Samples are attached in this file.
-"""
+""" 
 import numpy as np
 import cv2
 from random import *
 import os
-parent_dir="C:\Users\ÀÓ½ÂÇö\Desktop\HEVEN\week2"
+parent_dir="C:\Users\ì„ìŠ¹í˜„\Desktop\HEVEN\week2"
 directory="data"
 path=os.path.join(parent_dir,directory)
 os.mkdir(path)
 
-sign=cv2.imread("C:\Users\ÀÓ½ÂÇö\Desktop\HEVEN\week2\hw_0307\hw_0307\hw_1\sign.jpg",cv2.IMREAD_COLOR)
+sign=cv2.imread("C:\Users\ì„ìŠ¹í˜„\Desktop\HEVEN\week2\hw_0307\hw_0307\hw_1\sign.jpg",cv2.IMREAD_COLOR)
 
 cropped=sign.copy()
 cropped=sign[91:91+98,31:31+91]
-#Roi ¸¸µé±â
+#Roi ë§Œë“¤ê¸°
 for i in range (1,101):
     n=str(i)
-    road=cv2.imread("C:\Users\ÀÓ½ÂÇö\Desktop\HEVEN\week2\hw_0307\hw_0307\hw_1\\road.jpg",cv2.IMREAD_COLOR)
+    road=cv2.imread("C:\Users\ì„ìŠ¹í˜„\Desktop\HEVEN\week2\hw_0307\hw_0307\hw_1\\road.jpg",cv2.IMREAD_COLOR)
     row=randint(1+49,1131-49)
     col=randint(1+46,1696-46)
     roi=road[row-49:row+49,col-46:col+45]
-    #¸¶½ºÅ© ¸¸µé±â
+    #ë§ˆìŠ¤í¬ ë§Œë“¤ê¸°
     sign2gray=cv2.cvtColor(cropped,cv2.COLOR_BGR2GRAY)
     ret, mask=cv2.threshold(sign2gray,10,255,cv2.THRESH_BINARY)
     mask_inv=cv2.bitwise_not(mask)
 
-    #Roi¿¡¼­ ·Î°í¿¡ ÇØ´çÇÏ´Â ºÎºĞ¸¸ °ËÁ¤»öÀ¸·Î ¸¸µé±â
+    #Roiì—ì„œ ë¡œê³ ì— í•´ë‹¹í•˜ëŠ” ë¶€ë¶„ë§Œ ê²€ì •ìƒ‰ìœ¼ë¡œ ë§Œë“¤ê¸°
     backgr=cv2.bitwise_and(roi,roi,mask=mask_inv)
-    #»çÀÎ ÀÌ¹ÌÁö¿¡¼­ »çÀÎ ºÎºĞ¸¸ ÃßÃâÇÏ±â
+    #ì‚¬ì¸ ì´ë¯¸ì§€ì—ì„œ ì‚¬ì¸ ë¶€ë¶„ë§Œ ì¶”ì¶œí•˜ê¸°
     sign_image=cv2.bitwise_and(cropped,cropped,mask=mask)
-    #Ç¥ÁöÆÇ ÀÌ¹ÌÁö ¹è°æÀ» cv2.add·Î Åõ¸íÀ¸·Î ¸¸µé°í Roi¿¡ Ç¥ÁöÆÇ ÀÌ¹ÌÁö ³Ö±â
+    #í‘œì§€íŒ ì´ë¯¸ì§€ ë°°ê²½ì„ cv2.addë¡œ íˆ¬ëª…ìœ¼ë¡œ ë§Œë“¤ê³  Roiì— í‘œì§€íŒ ì´ë¯¸ì§€ ë„£ê¸°
     dst=cv2.add(backgr,sign_image)
     road[row-49:row+49,col-46:col+45]=dst
     if(1<=i<=9):
