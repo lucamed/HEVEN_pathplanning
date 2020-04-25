@@ -30,4 +30,4 @@ x2a=int((lines[0][0][2]+lines[1][0][0])/2)
 y2a=int((lines[0][0][3]+lines[1][0][1])/2)
 cv2.line(img, (x1a, y1a), (x2a, y2a), (0, 255, 0), 3) #display desired path in green
 cv2.imshow('path.jpg', img)
-cv2.waitKey(100000)
+cv2.waitKey(10000)
