@@ -150,7 +150,7 @@ while(YW.isOpened()):
     ##do hough transform to get details
     hough=cv2.HoughLinesP(segment,2,np.pi/180,100,np.array([]),minLineLength=100,maxLineGap=50)
     ##now draw lines based on hough transform
-    lines=calculate_lines(hough,frame)
+    lines=calculate_lines(hough,frame) 
 
     if cv2.waitKey(10)&0xFF==ord('q'):
         break
