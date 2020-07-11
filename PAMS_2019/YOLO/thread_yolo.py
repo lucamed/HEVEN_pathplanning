@@ -18,7 +18,7 @@ SIZE = 10  # Buffer size (if a class reaches SIZE frames -> do mission)
 IDLE_SIZE = 15  # Idle mode size (if no reading for IDLE frames -> reset buffer)
 THRESH = 0.4  # YOLO threshold
 MAX_SIZE = 50000  # Max area size that can be accepted as a detection   -> fix miss-detection with large bounding box
-MIN_SIZE = 400  # Min area size that can be accepted as a detection   -> fix miss-detection with small bounding box and prevents detecting anything on the background
+MIN_SIZE = 400  # Min area size that can be accepted as a detection   -> fix miss-detection with small bounding box and prevents detecting anything on the BG
 BRT_THRESH = 180
 
 # Correction

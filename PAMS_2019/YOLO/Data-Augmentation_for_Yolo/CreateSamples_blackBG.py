@@ -11,7 +11,7 @@ from BackgroundFileInterface  import BackgroundFileLoader
 from SampleImgInterface import SampImgModifier
 
 DEFAULT_PARAMS={
-'BackgroundFilePath':'./Data/background',
+'BackgroundFilePath':'./Data/BG',
 'SampleFilesPath':'./Data/tg',
 'bgColor': 255,
 'bgTthresh':80,

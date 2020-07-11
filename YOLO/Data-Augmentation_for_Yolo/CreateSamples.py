@@ -11,7 +11,7 @@ from BackgroundFileInterface  import BackgroundFileLoader
 from SampleImgInterface import SampImgModifier
 
 DEFAULT_PARAMS={
-'BackgroundFilePath':'./Data/background',
+'BackgroundFilePath':'./Data/BG',
 'SampleFilesPath':'./Data/tg',
 'bgColor': 255,
 'bgTthresh':80,
@@ -152,7 +152,7 @@ def main():
                 outputName= filename + '_'+ str(count)
                 cv.imwrite(os.path.join(outputfolder,str(outputName + '.jpg')),finalImg)
                 with open(os.path.join(outputfolder,str(outputName + '.txt')),'w') as f:
-                    details='0 '+' '.join(str(coord) for coord in np.reshape(finalBoundRect,4))+'\n'
+                    details=filename+'  '+' '.join(str(coord) for coord in np.reshape(finalBoundRect,4))+'\n'
                     f.write(details)
                 count=count+1
             else:
